@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41de92a23f77b543b24ca088099a50f, type: 3}
+  m_Name: level0_1
+  m_EditorClassIdentifier: 
+  questionData:
+    leafValue: 09000000070000000800000006000000
+  crossHint: 0
+  totalHint: 0
+  leafDatas:
+  - leafValue: 06000000020000000400000003000000
+  - leafValue: 04000000030000000500000003000000
+  - leafValue: 06000000020000000600000001000000
+  - leafValue: 05000000020000000600000002000000
+  Level: 0

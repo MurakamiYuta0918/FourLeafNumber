@@ -1,49 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-public class Leafs : MonoBehaviour,  IBeginDragHandler, IDragHandler,IEndDragHandler {
+using System.Linq;
+
+public class Leafs : MonoBehaviour {
+	protected virtual int[] nums { get; set; }
+
+	[SerializeField]
+	protected Leaf[] leafs;
 	
-	private Vector3 screenPoint;
-	private Vector3 offset;
-	public GameObject[] leafObjs;
-	public GameObject arrow;
-	public AnswerLeafs answerleafs;
-	public int[] nums;
-	public int[] save;
-	public bool dragflag = false;
-	public bool moveflag;
-	public Vector3 startPosition;
-	public Quaternion startRotation;
-
-
-	void Start() {
-		startPosition = transform.position;
-		startRotation = transform.rotation;
-				moveflag = true;
-	}
-
-	public void OnBeginDrag(PointerEventData eventData) {
-		dragflag = false;
-		if (moveflag) {
-			screenPoint = Camera.main.WorldToScreenPoint (transform.position);
+	protected void DisplayNumbers() {	
+		for(int i=0; i<leafs.Length; i++) {
+			leafs[i].Display(nums[i]);
 		}
 	}
 
-	public void OnDrag(PointerEventData eventData) {
-		if (moveflag) {
-			Vector3 currentScreenPoint = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-			Vector3 currentPosition = Camera.main.ScreenToWorldPoint (currentScreenPoint);
-			transform.position = currentPosition;
+	public static bool CompareLeafs(Leafs aLeafs, Leafs bLeafs) {
+		
+		for (int i=0; i<4; i++) {
+			if (aLeafs.nums[i] != bLeafs.nums[i]) {
+				return false;
+			}
 		}
+		return true; 
 	}
 
-	public void OnEndDrag(PointerEventData eventData) {
-		if (moveflag) {
-			dragflag = true;
+	public static void AddLeafs(AnswerLeafs answerLeafs, ValueLeafs valueLeafs) {
+		for (int i=0; i<4; i++) {
+			answerLeafs.nums[i] += valueLeafs.nums[i];
 		}
 	}
+	public static void SubLeafs(AnswerLeafs answerLeafs, ValueLeafs valueLeafs) {
+		for (int i=0; i<4; i++) {
+			answerLeafs.nums[i] -= valueLeafs.nums[i];
+		}
+	}
+	private void OnValidate() {
+		// leafs = GetComponentsInChildren<Leaf> ();
+	}
 
+	[System.Serializable]
+	public class LeafData {
+		public int[] leafValue = new int[4];
+		public void ApplyToLeafs(Leafs leafs) {
+			leafs.nums = (int[]) leafValue.Clone();
+			leafs.DisplayNumbers();
+		}
+	}
 }
-
